@@ -1,0 +1,38 @@
+services:
+  db:
+    image: postgres:16-alpine
+    restart: no
+    volumes:
+      - ~/.pg/pg_data/PAVEPOTestTask:/var/lib/postgresql/data
+    env_file:
+      - .env
+    environment:
+      - POSTGRES_DB=${DB_NAME}
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+    ports:
+      - "${DB_PORT}:5432"
+    networks:
+      - custom
+
+  redis:
+    image: redis:7
+    restart: no
+    ports:
+      - "${CELERY_BROKER_PORT}:${CELERY_BROKER_PORT}"
+    networks:
+      - custom
+
+  worker:
+    restart: no
+    depends_on:
+      - redis
+      - db
+    build: .
+    command: celery -A src.worker.celery worker --loglevel=info
+    networks:
+      - custom
+
+networks:
+  custom:
+    driver: bridge
