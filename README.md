@@ -3,17 +3,14 @@
 
 1. Клонируйте репозиторий
 ```
-git clone https://github.com/MaximBrezhnev/PetTracker.git
+git clone https://github.com/MaximBrezhnev/PAVEPOTestTask.git
 ```
 
 
 2. Установите на свое устройство docker и docker compose
 
 
-3. Создайте файл .env в корневой папке проекта по аналогии с файлом .env.example
-
-
-4. Запустите контейнеры с приложением и другими необходимыми сервисами командой
+3. Запустите контейнеры с приложением и другими необходимыми сервисами командой
 ```
 docker compose -f docker-compose-local.yml up -d 
 ```
